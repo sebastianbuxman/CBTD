@@ -8,14 +8,14 @@ namespace CBTDWeb.Pages.Categories
     public class IndexModel : PageModel
     {
         //local instance of database service
-        private readonly ApplicationDbContext _db;
+        private readonly UnitOfWork _unitOfWork;
 
         //UI front end to support looping through several categories.
-        public List<Category> objCategoryList;
+        public IEnumerable<Category> objCategoryList;
 
-        public IndexModel(ApplicationDbContext db)
+        public IndexModel(UnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
             objCategoryList = new List<Category>();
         }
 
@@ -27,7 +27,7 @@ namespace CBTDWeb.Pages.Categories
             //4. File Results
             //5. Return Content Results - a razor page for eg.
         {
-            objCategoryList = _db.Categories.ToList();
+            objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return Page();
         }
     }
