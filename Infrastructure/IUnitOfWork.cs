@@ -14,6 +14,8 @@ namespace Infrastructure
 
         public IGenericRepository<Manufacturer> Manufacturer { get; }
 
+        public IGenericRepository<Product> Product { get; }
+
         //add other models/tables here as create them so unitofwork has access to them.
 
         //save changes to the data source.

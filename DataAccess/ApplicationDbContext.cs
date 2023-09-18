@@ -19,6 +19,8 @@ namespace DataAccess
 
         //continue adding models...
         public DbSet<Manufacturer> Manufacturers { get; set; }
+
+        public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(

@@ -20,6 +20,8 @@ namespace DataAccess
 
         public IGenericRepository<Manufacturer> _Manufacturer;
 
+        public IGenericRepository<Product> _Product;
+
         public IGenericRepository<Category> Category
         {
             get
@@ -41,6 +43,18 @@ namespace DataAccess
                     _Manufacturer = new GenericRepository<Manufacturer>(_dbContext);
                 }
                 return _Manufacturer;
+            }
+        }
+
+        public IGenericRepository<Product> Product
+        {
+            get
+            {
+                if (_Product == null)
+                {
+                    _Product = new GenericRepository<Product>(_dbContext);
+                }
+                return _Product;
             }
         }
         public int Commit()
