@@ -58,11 +58,11 @@ namespace DataAccess
                 }
                 if (!trackChanges) // is false
                 {
-                    return _dbContext.Set<T>().Where(predicate).AsNoTracking().FirstOrDefault();
+                    return queryable.Where(predicate).AsNoTracking().FirstOrDefault();
                 }
                 else //we are tracking changes EF does by default
                 {
-                    return _dbContext.Set<T>().Where(predicate).FirstOrDefault();
+                    return queryable.Where(predicate).FirstOrDefault();
                 }
             }
 
