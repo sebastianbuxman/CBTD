@@ -1,5 +1,4 @@
-﻿using Infrastructure;
-using Infrastructure.Interfaces;
+﻿using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using System;
 using System.Collections.Generic;
