@@ -6,16 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Utility;
 
 namespace DataAccess
 {
     public class DbInitializer : IDbInitializer
     {
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public DbInitializer(ApplicationDbContext db)
+        public DbInitializer(ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
 
@@ -40,6 +46,29 @@ namespace DataAccess
             {
                 return; //DB has been seeded
             }
+
+            //create roles if they are not created
+            _roleManager.CreateAsync(new IdentityRole(SD.AdminRole)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(SD.CustomerRole)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(SD.ShipperRole)).GetAwaiter().GetResult(); 
+
+            //Create at least one "super admin account"
+
+            _userManager.CreateAsync(new ApplicationUser
+            {
+                UserName = "sebastianbuxman@mail.weber.edu",
+                Email = "sebastianbuxman@mail.weber.edu",
+                FirstName = "Sebastian",
+                LastName = "Buxman",
+                PhoneNumber = "1234567890",
+                StreetAddress = "123 Main Street",
+                City = "Ogden",
+                State = "UT",
+                PostalCode = "12345",
+            }, "Admin123*").GetAwaiter().GetResult();
+
+            ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "sebastianbuxman@mail.weber.edu");
+            _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
 
             var Categories = new List<Category>
             {
@@ -69,7 +98,7 @@ namespace DataAccess
             }
             _db.SaveChanges();
 
-            var Products = new List<Product>
+           /* var Products = new List<Product>
             {
             new Product {
                     Name = "Coca Cola Classic",
@@ -149,8 +178,8 @@ namespace DataAccess
             foreach (var p in Products)
             {
                 _db.Products.Add(p);
-            }
-            _db.SaveChanges();
+            }*/
+            //_db.SaveChanges();
 
         }
 

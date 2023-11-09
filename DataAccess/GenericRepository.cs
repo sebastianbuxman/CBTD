@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Interfaces;
+using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace DataAccess
         {
             _dbContext = dbContext;
         }
+
+        
 
         public void Add(T entity)
         {
@@ -192,6 +195,18 @@ namespace DataAccess
             //for track changes I'm flagging modified to the system.
             _dbContext.Entry(entity).State = EntityState.Modified;
             
+        }
+
+        public int DecrementCount(ShoppingCart shoppingCart, int count)
+        {
+            shoppingCart.Count -= count;
+            return shoppingCart.Count;
+        }
+
+        public int IncrementCount(ShoppingCart shoppingCart, int count)
+        {
+            shoppingCart.Count += count;
+            return shoppingCart.Count;
         }
     }
 }

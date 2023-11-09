@@ -20,7 +20,8 @@ namespace DataAccess
         public IGenericRepository<Manufacturer> _Manufacturer;
 
         public IGenericRepository<Product> _Product;
-
+        public IGenericRepository<ShoppingCart> _ShoppingCart;
+        public IGenericRepository<ApplicationUser> _ApplicationUser;
         public IGenericRepository<Category> Category
         {
             get
@@ -54,6 +55,30 @@ namespace DataAccess
                     _Product = new GenericRepository<Product>(_dbContext);
                 }
                 return _Product;
+            }
+        }
+
+        public IGenericRepository<ShoppingCart> ShoppingCart
+        {
+            get
+            {
+                if(_ShoppingCart == null)
+                {
+                    _ShoppingCart = new GenericRepository<ShoppingCart>(_dbContext);
+                }
+                return _ShoppingCart;
+            }
+        }
+
+        public IGenericRepository<ApplicationUser> ApplicationUser
+        {
+            get
+            {
+                if (_ApplicationUser == null)
+                {
+                    _ApplicationUser = new GenericRepository<ApplicationUser>(_dbContext);
+                }
+                return _ApplicationUser;
             }
         }
         public int Commit()
