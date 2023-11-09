@@ -15,6 +15,7 @@ namespace Infrastructure.Interfaces
 
         public IGenericRepository<Product> Product { get; }
 
+        public IGenericRepository<ApplicationUser> ApplicationUser { get; }
         //add other models/tables here as create them so unitofwork has access to them.
 
         //save changes to the data source.
